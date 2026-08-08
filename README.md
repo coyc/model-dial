@@ -149,9 +149,6 @@ curl http://localhost:8765/v1/chat/completions \
 
 `logs/current-model.json` stores the current per-category model pools (persisted across restarts).
 
-### Logs
-
-Logs go to `logs/gateway.log` with daily rotation (keeps today + yesterday). Two modes (`normal` / `debug`) are controlled by `gateway.log_level` — see [docs/logs.md](docs/logs.md) for details.
 
 ## More Info
 
