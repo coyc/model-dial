@@ -1,0 +1,8 @@
+{
+    "deny": [
+        {"model_id": "google/gemma-4-26B-A4B-it", "provider": "huggingface"},
+        {"model_id": "nvidia/nemotron-mini-4b-instruct", "provider": "nvidia"},
+        {"model_id": "gemini-flash-lite-latest", "provider": "google"},
+        {"model_id": "gemini-3.5-flash-lite", "provider": "google"}
+    ]
+}

@@ -1,0 +1,61 @@
+# .gitignore for the models-tester project
+
+# Local docker-compose (copy from docker-compose.example.yml and customize)
+docker-compose.yml
+
+# Local config with real credentials.
+# Use docker/providers.example.json / docker/config.example.json as templates
+# and copy them to the real file names with your own keys.
+providers.json
+config.json
+deny.json
+
+# Ignore generated results
+result-*.json
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Ignore test coverage files
+.coverage
+coverage.xml
+htmlcov/
+coverage/
+
+# Ignore IDE and editor files
+*.idea/
+*.vscode/
+*.iml
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+
+# Ignore log files and runtime state
+*.log
+logs/
+
+# Ignore environment files
+.env
+.env.*
+
+# Ignore local settings and credentials
+local_settings.py
+credentials.json
+
+# Ignore virtual environments
+venv/
+.venv/
+env/
+
+# Ignore Jupyter notebooks
+.ipynb_checkpoints/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 440" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="b" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="440" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <!-- Title -->
+  <text x="430" y="34" text-anchor="middle" font-size="17" font-weight="700" fill="#1e293b">Architecture Overview</text>
+
+  <!-- ═══════════ MODEL TESTER ═══════════ -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="56" width="350" height="360" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  </g>
+  <rect x="30" y="56" width="350" height="38" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect x="30" y="84" width="350" height="10" fill="#f1f5f9"/>
+  <text x="205" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#334155">Model Tester</text>
+  <text x="205" y="112" text-anchor="middle" font-size="11" fill="#64748b">run.sh</text>
+
+  <!-- ── Step 1: Fetch ── -->
+  <rect x="55" y="130" width="100" height="34" rx="6" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="105" y="151" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">STEP 1</text>
+
+  <line x1="155" y1="147" x2="185" y2="147" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="190" y="130" width="170" height="34" rx="6" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="275" y="145" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">Fetch Models</text>
+  <text x="275" y="158" text-anchor="middle" font-size="9" fill="#6b7280">providers.json</text>
+
+  <!-- ── Step 2: Check ── -->
+  <rect x="55" y="190" width="100" height="34" rx="6" fill="#fefce8" stroke="#fde047"/>
+  <text x="105" y="211" text-anchor="middle" font-size="10" font-weight="700" fill="#854d0e">STEP 2</text>
+
+  <line x1="155" y1="207" x2="185" y2="207" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="190" y="190" width="170" height="34" rx="6" fill="#fefce8" stroke="#fde047"/>
+  <text x="275" y="205" text-anchor="middle" font-size="10" font-weight="600" fill="#854d0e">Check Requirements</text>
+  <text x="275" y="218" text-anchor="middle" font-size="9" fill="#6b7280">models.dev catalog</text>
+
+  <!-- ── Step 3: Test ── -->
+  <rect x="55" y="250" width="100" height="34" rx="6" fill="#fdf2f8" stroke="#f9a8d4"/>
+  <text x="105" y="271" text-anchor="middle" font-size="10" font-weight="700" fill="#9d174d">STEP 3</text>
+
+  <line x1="155" y1="267" x2="185" y2="267" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="190" y="250" width="170" height="34" rx="6" fill="#fdf2f8" stroke="#f9a8d4"/>
+  <text x="275" y="265" text-anchor="middle" font-size="10" font-weight="600" fill="#9d174d">Test Models</text>
+  <text x="275" y="278" text-anchor="middle" font-size="9" fill="#6b7280">config.json</text>
+
+  <!-- vertical connectors between steps -->
+  <line x1="275" y1="164" x2="275" y2="190" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="275" y1="224" x2="275" y2="250" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Output -->
+  <rect x="195" y="310" width="160" height="48" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4,2"/>
+  <text x="275" y="324" text-anchor="middle" font-size="10" fill="#475569">result-test.json</text>
+
+  <!-- Pool badges inside output -->
+  <rect x="205" y="332" width="38" height="16" rx="3" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="0.8"/>
+  <text x="224" y="343" text-anchor="middle" font-size="8" font-weight="600" fill="#065f46">fast</text>
+
+  <rect x="248" y="332" width="42" height="16" rx="3" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="0.8"/>
+  <text x="269" y="343" text-anchor="middle" font-size="8" font-weight="600" fill="#065f46">coder</text>
+
+  <rect x="295" y="332" width="46" height="16" rx="3" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="0.8"/>
+  <text x="318" y="343" text-anchor="middle" font-size="8" font-weight="600" fill="#065f46">visual</text>
+
+  <line x1="275" y1="284" x2="275" y2="310" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Tester summary -->
+  <text x="205" y="382" text-anchor="middle" font-size="9" fill="#94a3b8">Fetch -> Check -> Test -> result-test.json</text>
+  <text x="205" y="397" text-anchor="middle" font-size="9" fill="#94a3b8">Credential rotation on quota errors</text>
+  <text x="205" y="412" text-anchor="middle" font-size="9" fill="#94a3b8">Rejects models without catalog data</text>
+
+  <!-- ═══════════ GATEWAY ═══════════ -->
+  <g filter="url(#shadow)">
+    <rect x="480" y="56" width="350" height="360" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  </g>
+  <rect x="480" y="56" width="350" height="38" rx="10" fill="#eff6ff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect x="480" y="84" width="350" height="10" fill="#eff6ff"/>
+  <text x="655" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#334155">Gateway</text>
+  <text x="655" y="112" text-anchor="middle" font-size="11" fill="#64748b">OpenAI-compatible proxy (FastAPI)</text>
+
+  <!-- Client Request -->
+  <rect x="590" y="126" width="130" height="44" rx="6" fill="#ede9fe" stroke="#c4b5fd"/>
+  <text x="655" y="144" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">Client Request</text>
+  <text x="655" y="162" text-anchor="middle" font-size="9" fill="#7c3aed">model: "coder"</text>
+
+  <!-- Arrow: client → coder pool -->
+  <line x1="655" y1="170" x2="655" y2="188" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Pools -->
+  <rect x="525" y="192" width="80" height="30" rx="5" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="565" y="211" text-anchor="middle" font-size="11" font-weight="600" fill="#065f46">fast</text>
+
+  <rect x="615" y="192" width="80" height="30" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="655" y="211" text-anchor="middle" font-size="11" font-weight="600" fill="#065f46">coder</text>
+
+  <rect x="705" y="192" width="80" height="30" rx="5" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="745" y="211" text-anchor="middle" font-size="11" font-weight="600" fill="#065f46">visual</text>
+
+  <!-- Arrow: pools → select -->
+  <line x1="655" y1="222" x2="655" y2="244" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Select fastest -->
+  <rect x="540" y="248" width="230" height="40" rx="6" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="655" y="265" text-anchor="middle" font-size="10" font-weight="600" fill="#9a3412">Pick fastest model from pool</text>
+  <text x="655" y="281" text-anchor="middle" font-size="9" fill="#b45309">switch to next on any error</text>
+
+  <!-- Arrow: select → provider -->
+  <line x1="655" y1="288" x2="655" y2="310" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Provider API -->
+  <rect x="560" y="314" width="190" height="34" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="655" y="330" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Provider API</text>
+  <text x="655" y="343" text-anchor="middle" font-size="8" fill="#b45309">messages passed as-is</text>
+
+  <line x1="655" y1="348" x2="655" y2="368" stroke="#64748b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Response -->
+  <rect x="575" y="372" width="160" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4,2"/>
+  <text x="655" y="388" text-anchor="middle" font-size="10" fill="#475569">Streamed response</text>
+
+  <!-- ═══════════ CONNECTION ═══════════ -->
+  <path d="M 380 324 Q 430 324 430 200 Q 430 80 480 80" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#b)"/>
+  <rect x="399" y="190" width="62" height="18" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="430" y="203" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">feeds</text>
+</svg>

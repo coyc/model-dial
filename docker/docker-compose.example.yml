@@ -1,0 +1,18 @@
+services:
+  core:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    volumes:
+      - .:/app
+    environment:
+      # Run model tests every N minutes. Default: 60 (every hour).
+      # Comment out to disable auto-testing.
+      SCHEDULER_INTERVAL: 60
+      # Alternative: specific times (mutually exclusive with INTERVAL)
+      # SCHEDULER_TIMES: "08:00 14:00 20:00"
+      # Optional: extra args for run.sh
+      # SCHEDULER_ARGS: "--concurrency 5"

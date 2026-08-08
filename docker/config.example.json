@@ -1,0 +1,123 @@
+{
+    "user_agent": "opencode/1.17.4",
+    "models_catalog_url": " ",
+    "requirements": {
+        "fast": {
+            "models_catalog": {
+                "tool_call": true,
+                "limit": { "context": 60000, "output": 8000 }
+            },
+            "model_id": {
+                "providers": [],
+                "include": ["flash", "fast", "speed", "quick", "turbo", "realtime", "highspeed", "instant", "rapid", "swift", "haiku"],
+                "exclude": ["nano", "micro", "tiny", "safeguard"],
+                "min_params": null
+            },
+            "test": {
+                "ttft_ms": 1500,
+                "total_ms": 2000
+            },
+            "sort_strategy": "ttft_ms",
+            "fallback_models": [
+                {"provider": "opencode", "model_id": "my-private-flash"}
+            ]
+        },
+        "coder": {
+            "models_catalog": {
+                "tool_call": true,
+                "reasoning": true,
+                "limit": { "context": 200000, "output": 32000 }
+            },
+            "model_id": {
+                "include": [
+                    "big-pickle",
+                    "claude-haiku-4-5",
+                    "claude-opus-5",
+                    "claude-sonnet-5",
+                    "deepseek-v4-flash",
+                    "deepseek-v4-pro",
+                    "gemini-3.1-pro",
+                    "gemini-3.6-flash",
+                    "gemma-4-31b-it",
+                    "glm-5.2",
+                    "gpt-5.4-pro",
+                    "gpt-5.5-pro",
+                    "gpt-5.6-sol",
+                    "inkling",
+                    "kimi-k2.7-code",
+                    "kimi-k3",
+                    "longcat-2.0",
+                    "mimo-v2.5",
+                    "nemotron-3-ultra",
+                    "qwen3-coder-flash",
+                    "qwen3-vl-plus",
+                    "qwen3.6-plus",
+                    "qwen3.7-plus",
+                    "qwen3.8-max"
+                ]
+            },
+            "test": {
+                "ttft_ms": null,
+                "total_ms": null
+            }
+        },
+        "visual": {
+            "models_catalog": {
+                "tool_call": true,
+                "reasoning": true,
+                "attachment": true,
+                "modalities": { "input": ["text", "image"] },
+                "limit": { "context": 60000, "output": 16000 }
+            },
+            "model_id": {
+                "providers": [],
+                "include": [],
+                "exclude": ["nano", "micro", "flash", "tiny", "lite", "small"],
+                "min_params": "8b"
+            },
+            "test": {
+                "ttft_ms": null,
+                "total_ms": null
+            }
+        },
+        "planner": {
+            "models_catalog": {
+                "tool_call": true,
+                "reasoning": true,
+                "limit": { "context": 900000, "output": 120000 }
+            },
+            "model_id": {
+                "include": [
+                    "claude-opus-5",
+                    "claude-sonnet-5",
+                    "deepseek-v4-pro",
+                    "glm-5.2",
+                    "gpt-5.4-pro",
+                    "gpt-5.5-pro",
+                    "gpt-5.6-sol",
+                    "kimi-k3",
+                    "nemotron-3-ultra",
+                    "qwen3.8-max"
+                ]
+            }
+        }
+    },
+    "test_models": {
+        "prompt": "Calculate 2+2. Reply ONLY with valid JSON: {\"answer\": <number>, \"reasoning\": \"<one word>\"}. No explanation, no markdown, no code fences. Be quick.",
+        "expected": "4",
+        "concurrency": 10,
+        "timeout": 30,
+        "max_tokens": 1024
+    },
+    "gateway": {
+        "api_key": "change-me",
+        "port": 8765,
+        "switch_on_any_error": true,
+        "infinite_models": false,
+        "show_debug_tag": false,
+        "request_timeout_ms": 60000,
+        "stream_idle_timeout_ms": 30000,
+        "tool_choice": "auto",
+        "log_level": "normal"        
+    }
+}

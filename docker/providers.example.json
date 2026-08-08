@@ -1,0 +1,52 @@
+{
+  "google": {
+    "type": "google",
+    "credentials": [
+      {
+        "base_url": "https://generativelanguage.googleapis.com/v1beta",
+        "api_key": "AIza-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      {
+        "base_url": "https://generativelanguage.googleapis.com/v1beta",
+        "api_key": "AIza-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+      }
+    ]
+  },
+  "opencode": {
+    "type": "openai",
+    "credentials": [
+      {
+        "base_url": "https://opencode.ai/zen/v1",
+        "api_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ]
+  },
+  "alibaba": {
+    "type": "openai",
+    "credentials": [
+      {
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "api_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ]
+  },
+  "openrouter": {
+    "type": "openai",
+    "model_filter": ":free",
+    "credentials": [
+      {
+        "base_url": "https://openrouter.ai/api/v1",
+        "api_key": "sk-or-v1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ]
+  },
+  "nvidia": {
+    "type": "openai",
+    "credentials": [
+      {
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "api_key": "nvapi-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ]
+  }
+}
