@@ -58,6 +58,8 @@ make client
 
 Select a model and start chatting. Use `/quit` to exit.
 
+> **Note:** The built-in client is a minimal REPL — it only verifies that the gateway chat endpoint works. It is not a full-featured client for day-to-day use.
+
 ## How It Works
 
 Model Dial has two parts:
