@@ -58,7 +58,7 @@ make client
 
 Select a model and start chatting. Use `/quit` to exit.
 
-> **Note:** The built-in client is a minimal REPL — it only verifies that the gateway chat endpoint works. It is not a full-featured client for day-to-day use.
+> **Note:** The built-in client is a minimal REPL — it only verifies that the gateway chat endpoint works. It is not a full-featured client for day-to-day use. For full-featured usage, configure your own client — see [OpenCode integration →](#opencode-integration).
 
 ## How It Works
 
