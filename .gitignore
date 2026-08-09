@@ -44,9 +44,10 @@ logs/
 .env
 .env.*
 
-# Ignore local settings and credentials
+# Ignore local settings, credentials and temp docs
 local_settings.py
 credentials.json
+.docs/
 
 # Ignore virtual environments
 venv/
