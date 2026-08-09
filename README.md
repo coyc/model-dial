@@ -74,7 +74,7 @@ This command:
 
 ## Auto-testing
 
-Model tests also run automatically every hour by default. Configure in [docker-compose.yml](docker-compose.yml):
+Model tests also run automatically every hour by default. Configure in `docker-compose.yml`:
 
 ```yaml
 environment:
