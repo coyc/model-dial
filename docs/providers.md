@@ -34,7 +34,9 @@ Supports **multiple API keys per provider** with automatic rotation on quota exh
 }
 ```
 
-**Provider names**: top-level key = provider ID, matching the [models.dev catalog](https://models.dev/api.json) — any provider from it can be added. Note: only `"openai"` and `"google"` types are supported; other API formats won't work.
+**Provider names**: top-level key = provider ID, matching the [models.dev catalog](https://models.dev/api.json) — any provider from it can be added.
+
+> **Note:** Currently only `"openai"` (OpenAI-compatible) and `"google"` types are supported. Other API formats are planned for future releases.
 
 | Field | Description |
 |-------|-------------|
