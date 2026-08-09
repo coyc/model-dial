@@ -128,11 +128,12 @@ async def send_message(
     session: aiohttp.ClientSession,
     url: str,
     headers: dict[str, str],
+    model: str,
     messages: list[dict],
     timeout: float,
 ) -> dict:
     """POST to /v1/chat/completions, return parsed JSON response."""
-    payload = build_request_payload(messages[-1]["content"] if messages else "", messages)
+    payload = build_request_payload(model, messages)
     client_timeout = aiohttp.ClientTimeout(total=timeout)
     async with session.post(url, json=payload, headers=headers, timeout=client_timeout) as resp:
         body = await resp.json()
@@ -206,7 +207,7 @@ async def main() -> int:
                 messages.append({"role": "user", "content": user_input})
 
                 try:
-                    response_json = await send_message(session, url, headers, messages, timeout_sec)
+                    response_json = await send_message(session, url, headers, selected, messages, timeout_sec)
                     content = extract_response_content(response_json)
                     messages.append({"role": "assistant", "content": content})
                     print(f"\nAssistant: {content}\n")
