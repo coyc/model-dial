@@ -1,4 +1,4 @@
-.PHONY: help up down ps start stop restart state switch reset rotate test units logs config-opencode
+.PHONY: help up down ps start stop restart state switch reset rotate client test units logs config-opencode
 
 help: ## Show this help
 	@echo "Model Dial - Use pool of the fastest capable AI models as single model. Model switched automatically if error."
@@ -17,6 +17,7 @@ help: ## Show this help
 	@echo "  \033[36mswitch\033[0m          Switch category (usage: make switch CATEGORY=fast)"
 	@echo "  \033[36mreset\033[0m           Remove saved state and restart gateway"
 	@echo "  \033[36mrotate\033[0m          Rotate provider (usage: make rotate PROVIDER=openai)"
+	@echo "  \033[36mclient\033[0m          Run interactive CLI client (OpenAI-compatible)"
 	@echo ""
 	@echo "\033[1mModel Testing:\033[0m"
 	@echo "  \033[36mtest\033[0m            Run model tests (scan providers + test models)"
@@ -69,6 +70,9 @@ rotate: ## Rotate provider (usage: make rotate PROVIDER=openai)
 		exit 1; \
 	fi
 	docker compose exec -T core ./gateway.sh rotate $(PROVIDER)
+
+client: ## Run interactive CLI client (OpenAI-compatible)
+	docker compose exec -T core python3 tools/client.py
 
 test: ## Run model tests
 	docker compose exec -T core ./run.sh
