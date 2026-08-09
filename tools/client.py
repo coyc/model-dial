@@ -124,6 +124,22 @@ def print_welcome(model: str, base_url: str) -> None:
 # ---------------------------------------------------------------------------
 
 
+async def spinner(label: str = "Thinking") -> None:
+    """Display a rotating spinner while awaiting long-running operations."""
+    chars = "|/-\\"
+    idx = 0
+    try:
+        while True:
+            char = chars[idx % len(chars)]
+            print(f"\r{char} {label}...", end="", flush=True)
+            idx += 1
+            await asyncio.sleep(0.1)
+    except asyncio.CancelledError:
+        # Clean up the spinner line
+        print("\r" + " " * (len(label) + 12) + "\r", end="", flush=True)
+        raise
+
+
 async def send_message(
     session: aiohttp.ClientSession,
     url: str,
@@ -206,6 +222,7 @@ async def main() -> int:
 
                 messages.append({"role": "user", "content": user_input})
 
+                spinner_task = asyncio.create_task(spinner())
                 try:
                     response_json = await send_message(session, url, headers, selected, messages, timeout_sec)
                     content = extract_response_content(response_json)
@@ -220,6 +237,12 @@ async def main() -> int:
                     print(f"\nError: Request timed out after {timeout_sec:.0f}s\n")
                 except Exception as exc:  # noqa: BLE001 — keep interactive loop alive on unexpected errors
                     print(f"\nError: {exc}\n")
+                finally:
+                    spinner_task.cancel()
+                    try:
+                        await spinner_task
+                    except asyncio.CancelledError:
+                        pass
 
     except (KeyboardInterrupt, EOFError):
         print("\nBye!")
