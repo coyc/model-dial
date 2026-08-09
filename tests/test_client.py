@@ -5,14 +5,19 @@ import json
 import pytest
 
 from tools.client import (
+    assistant_color,
     build_headers,
     build_request_payload,
+    colorize,
+    error_color,
     extract_error_message,
     extract_response_content,
     get_available_models,
     get_gateway_base_url,
     load_config,
     parse_model_selection,
+    supports_color,
+    user_color,
 )
 
 # =========================================================================
@@ -295,3 +300,54 @@ class TestExitCommands:
         assert "/help" not in exit_commands
         assert "exit" not in exit_commands
         assert "/exit " not in exit_commands
+
+
+# =========================================================================
+# 8. Terminal colors
+# =========================================================================
+
+class TestTerminalColors:
+    """Color helpers are no-op without a TTY and wrap text with ANSI codes when supported."""
+
+    def test_colorize_noop_without_tty(self, monkeypatch):
+        """Without color support the text is returned unchanged."""
+        monkeypatch.setattr("tools.client.supports_color", lambda: False)
+        assert colorize("hello", "\033[36m") == "hello"
+
+    def test_colorize_wraps_with_ansi(self, monkeypatch):
+        """With color support the text is wrapped in ANSI codes."""
+        monkeypatch.setattr("tools.client.supports_color", lambda: True)
+        assert colorize("hello", "\033[36m") == "\033[36mhello\033[0m"
+
+    def test_user_color(self, monkeypatch):
+        """User color is cyan."""
+        monkeypatch.setattr("tools.client.supports_color", lambda: True)
+        assert user_color("You:") == "\033[36mYou:\033[0m"
+
+    def test_assistant_color(self, monkeypatch):
+        """Assistant color is green."""
+        monkeypatch.setattr("tools.client.supports_color", lambda: True)
+        assert assistant_color("Answer") == "\033[32mAnswer\033[0m"
+
+    def test_error_color(self, monkeypatch):
+        """Error color is red."""
+        monkeypatch.setattr("tools.client.supports_color", lambda: True)
+        assert error_color("Boom") == "\033[31mBoom\033[0m"
+
+    def test_supports_color_false_when_not_tty(self, monkeypatch):
+        """supports_color is False when stdout is not a TTY."""
+        class _FakeStdout:
+            def isatty(self) -> bool:
+                return False
+
+        monkeypatch.setattr("tools.client.sys.stdout", _FakeStdout())
+        assert supports_color() is False
+
+    def test_supports_color_true_when_tty(self, monkeypatch):
+        """supports_color is True when stdout is a TTY."""
+        class _FakeStdout:
+            def isatty(self) -> bool:
+                return True
+
+        monkeypatch.setattr("tools.client.sys.stdout", _FakeStdout())
+        assert supports_color() is True

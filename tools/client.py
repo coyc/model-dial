@@ -110,10 +110,48 @@ def extract_error_message(response_json: dict) -> str:
     return error.get("message", "Unknown error")
 
 
+# ---------------------------------------------------------------------------
+# Terminal colors
+# ---------------------------------------------------------------------------
+
+_ANSI_RESET = "\033[0m"
+_ANSI_CYAN = "\033[36m"
+_ANSI_GREEN = "\033[32m"
+_ANSI_RED = "\033[31m"
+_ANSI_YELLOW = "\033[33m"
+
+
+def supports_color() -> bool:
+    """Return True when the output stream is a TTY (ANSI colors supported)."""
+    return bool(sys.stdout.isatty())
+
+
+def colorize(text: str, color: str) -> str:
+    """Wrap text in an ANSI color; no-op when the terminal has no color support."""
+    if not supports_color():
+        return text
+    return f"{color}{text}{_ANSI_RESET}"
+
+
+def user_color(text: str) -> str:
+    """Color user messages/prompts (cyan)."""
+    return colorize(text, _ANSI_CYAN)
+
+
+def assistant_color(text: str) -> str:
+    """Color assistant messages (green)."""
+    return colorize(text, _ANSI_GREEN)
+
+
+def error_color(text: str) -> str:
+    """Color error messages (red)."""
+    return colorize(text, _ANSI_RED)
+
+
 def print_welcome(model: str, base_url: str) -> None:
     """Print banner with selected model, gateway URL, usage instructions."""
-    print(f"\nModel: {model}")
-    print(f"Gateway: {base_url}")
+    print(f"\n{user_color('Model:')} {model}")
+    print(f"{user_color('Gateway:')} {base_url}")
     print("\nType your message and press Enter to send.")
     print("Commands: /exit or /quit to exit.\n")
     print("=" * 40 + "\n")
@@ -208,7 +246,7 @@ async def main() -> int:
         async with aiohttp.ClientSession() as session:
             while True:
                 try:
-                    user_input = input("You: ").strip()
+                    user_input = input(user_color("You: ")).strip()
                 except (KeyboardInterrupt, EOFError):
                     print("\nBye!")
                     return 0
@@ -227,16 +265,16 @@ async def main() -> int:
                     response_json = await send_message(session, url, headers, selected, messages, timeout_sec)
                     content = extract_response_content(response_json)
                     messages.append({"role": "assistant", "content": content})
-                    print(f"\nAssistant: {content}\n")
+                    print(f"\n{assistant_color('Assistant: ' + content)}\n")
                 except RuntimeError as exc:
-                    print(f"\nError: {exc}\n")
+                    print(f"\n{error_color(f'Error: {exc}')}\n")
                 except aiohttp.ClientConnectorError:
-                    print(f"\nError: Cannot connect to gateway at {base_url}")
+                    print(f"\n{error_color(f'Error: Cannot connect to gateway at {base_url}')}")
                     print("Hint: Make sure the gateway is running — make start\n")
                 except asyncio.TimeoutError:
-                    print(f"\nError: Request timed out after {timeout_sec:.0f}s\n")
+                    print(f"\n{error_color(f'Error: Request timed out after {timeout_sec:.0f}s')}\n")
                 except Exception as exc:  # noqa: BLE001 — keep interactive loop alive on unexpected errors
-                    print(f"\nError: {exc}\n")
+                    print(f"\n{error_color(f'Error: {exc}')}\n")
                 finally:
                     spinner_task.cancel()
                     try:
