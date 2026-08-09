@@ -50,16 +50,13 @@ Remove the example providers that aren't yours and add your own. See [providers 
 
 > **Note:** Currently only `"openai"` (OpenAI-compatible) and `"google"` provider types are supported. Other API formats are planned for future releases.
 
-**Verify it works:**
+## Verify it works
 
 ```bash
-curl http://localhost:8765/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_GATEWAY_KEY" \
-  -d '{"model": "coder", "messages": [{"role": "user", "content": "Hello!"}]}'
+make client
 ```
 
-> **Note:** The gateway key is set in `config.json` → `gateway.api_key`.
+Select a model and start chatting. Use `/quit` to exit.
 
 ## How It Works
 
