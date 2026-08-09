@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- **Docker** — for running Model Dial in containers
+- **Docker** — for running Model Dial in container
 - **API keys** — at least one provider (Google, OpenAI, NVIDIA, OpenRouter, etc.)
 
 > No Docker? See [Local Setup →](docs/local-setup.md)
@@ -20,7 +20,7 @@
 ## Quick Start (3 steps)
 
 ```bash
-# 1. Start the containers
+# 1. Start the container
 cd model-dial
 make up
 
@@ -34,15 +34,15 @@ make test
 
 ```json
 {
-  "openrouter": {
-    "type": "openai",
-    "credentials": [
-      {
-        "base_url": "https://openrouter.ai/api/v1",
-        "api_key": "sk-or-v1-YOUR_API_KEY_HERE"
-      }
-    ]
-  }
+    "openrouter": {
+        "type": "openai",
+        "credentials": [
+            {
+                "base_url": "https://openrouter.ai/api/v1",
+                "api_key": "sk-or-v1-YOUR_API_KEY_HERE"
+            }
+        ]
+    }
 }
 ```
 
