@@ -72,7 +72,7 @@ rotate: ## Rotate provider (usage: make rotate PROVIDER=openai)
 	docker compose exec -T core ./gateway.sh rotate $(PROVIDER)
 
 client: ## Run interactive CLI client (OpenAI-compatible)
-	docker compose exec -T core python3 tools/client.py
+	docker compose exec -it core python3 tools/client.py
 
 test: ## Run model tests
 	docker compose exec -T core ./run.sh

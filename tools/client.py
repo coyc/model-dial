@@ -6,6 +6,7 @@ Usage: python3 tools/client.py
 
 import asyncio
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -122,7 +123,15 @@ _ANSI_YELLOW = "\033[33m"
 
 
 def supports_color() -> bool:
-    """Return True when the output stream is a TTY (ANSI colors supported)."""
+    """Return True when the output stream is a TTY (ANSI colors supported).
+
+    The NO_COLOR env var disables colors; FORCE_COLOR forces them on even when
+    stdout is not a TTY (e.g. piped output or Docker ``-T`` mode).
+    """
+    if os.environ.get("NO_COLOR"):
+        return False
+    if os.environ.get("FORCE_COLOR"):
+        return True
     return bool(sys.stdout.isatty())
 
 

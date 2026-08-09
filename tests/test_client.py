@@ -351,3 +351,25 @@ class TestTerminalColors:
 
         monkeypatch.setattr("tools.client.sys.stdout", _FakeStdout())
         assert supports_color() is True
+
+    def test_supports_color_force_env(self, monkeypatch):
+        """FORCE_COLOR env overrides non-TTY stdout."""
+        class _FakeStdout:
+            def isatty(self) -> bool:
+                return False
+
+        monkeypatch.setattr("tools.client.sys.stdout", _FakeStdout())
+        monkeypatch.setenv("FORCE_COLOR", "1")
+        monkeypatch.delenv("NO_COLOR", raising=False)
+        assert supports_color() is True
+
+    def test_supports_color_no_color_env_disables(self, monkeypatch):
+        """NO_COLOR env disables colors even on a TTY."""
+        class _FakeStdout:
+            def isatty(self) -> bool:
+                return True
+
+        monkeypatch.setattr("tools.client.sys.stdout", _FakeStdout())
+        monkeypatch.setenv("NO_COLOR", "1")
+        monkeypatch.delenv("FORCE_COLOR", raising=False)
+        assert supports_color() is False
