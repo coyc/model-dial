@@ -134,6 +134,8 @@ curl http://localhost:8765/v1/chat/completions \
   }'
 ```
 
+>**Default port:** The gateway listens on port **8765**.
+
 ### How it works
 
 1. On startup, loads `result-test.json` and groups successful models into per-category pools using `requirements_breakdown`, sorted by speed (fastest first)
