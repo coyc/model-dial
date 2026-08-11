@@ -42,6 +42,8 @@ _QUOTA_PATTERNS = [
     re.compile(r'accessdenied\.?\s*unpurchased', re.IGNORECASE),
     re.compile(r'access\s+to\s+model\s+denied', re.IGNORECASE),
     re.compile(r'not\s+found\s+for\s+account', re.IGNORECASE),
+    re.compile(r'creditserror', re.IGNORECASE),
+    re.compile(r'no\s+payment\s+method', re.IGNORECASE),
 ]
 
 # ---------------------------------------------------------------------------

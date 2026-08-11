@@ -215,6 +215,11 @@ class TestRealWorldMessages:
         'HTTP 404: {"status":404,"title":"Not Found","detail":"Function '
         "'23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account "
         "'MDmNtX0mUjkyeZlEyo3UFMAUf3RF22sJJSMrnC1XAZs'\"}",
+
+        # opencode — this credential's workspace has no payment method (HTTP 401)
+        'HTTP 401: {"type":"error","error":{"type":"CreditsError","message":'
+        '"No payment method. Add a payment method here: '
+        'https://opencode.ai/workspace/wrk_01KYC9K0259SBJCKHEJC746SX6/billing"}}',
     ])
     def test_real_world_quota_error(self, msg):
         assert is_quota_error(msg) is True
@@ -244,6 +249,22 @@ class TestNotFoundForAccount:
         "not found for account",
         "NOT FOUND FOR ACCOUNT",
         "Function 'abc-123': Not found for account 'xyz'",
+    ])
+    def test_matches(self, msg):
+        assert is_quota_error(msg) is True
+
+
+# ---------------------------------------------------------------------------
+# opencode CreditsError / no payment method (requires credential rotation)
+# ---------------------------------------------------------------------------
+class TestCreditsErrorNoPaymentMethod:
+    @pytest.mark.parametrize("msg", [
+        '"type":"CreditsError"',
+        "CreditsError",
+        "creditserror",
+        "No payment method. Add a payment method here: https://example.com/billing",
+        "no payment method",
+        "NO PAYMENT METHOD",
     ])
     def test_matches(self, msg):
         assert is_quota_error(msg) is True
