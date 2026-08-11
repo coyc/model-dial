@@ -68,7 +68,7 @@
     "test_models": {
         "prompt": "Calculate 2+2. Reply ONLY with valid JSON: {\"answer\": <number>, \"reasoning\": \"<one word>\"}. No explanation, no markdown, no code fences. Be quick.",
         "expected": "4",
-        "concurrency": 10,
+        "concurrency": 18,
         "timeout": 30,
         "max_tokens": 1024
     },
