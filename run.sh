@@ -22,7 +22,26 @@ SRC="$SCRIPT_DIR/src"
 FETCH_OUTPUT="$SCRIPT_DIR/result-fetch.json"
 CHECKED_OUTPUT="$SCRIPT_DIR/result-requirements.json"
 TEST_OUTPUT="$SCRIPT_DIR/result-test.json"
+LOCK_FILE="$SCRIPT_DIR/logs/run.lock"
 cd "$SCRIPT_DIR"
+
+# --- Concurrency guard ---
+# Only one run.sh (manual `make test` or the scheduler) may write the
+# result-*.json files at a time — a second run truncates them mid-write
+# via `>` and can crash the gateway when it reads a half-written file.
+mkdir -p "$(dirname "$LOCK_FILE")"
+if [[ -f "$LOCK_FILE" ]]; then
+  existing_pid="$(tr -d '[:space:]' < "$LOCK_FILE" 2>/dev/null || true)"
+  if [[ -n "$existing_pid" ]] && kill -0 "$existing_pid" 2>/dev/null; then
+    echo "Error: another run.sh is already running (PID $existing_pid, lock: $LOCK_FILE)." >&2
+    echo "Wait for it to finish, or check its progress before retrying." >&2
+    exit 1
+  fi
+  echo "Removing stale lock file (PID ${existing_pid:-unknown} no longer running)." >&2
+  rm -f "$LOCK_FILE"
+fi
+echo "$$" > "$LOCK_FILE"
+trap 'rm -f "$LOCK_FILE"' EXIT
 
 # Checks
 if ! command -v python3 >/dev/null 2>&1; then
