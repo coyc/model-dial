@@ -205,8 +205,28 @@ class TestRealWorldMessages:
         'HTTP 429: {"error":{"message":"Provider returned error","code":429,'
         '"metadata":{"raw":"poolside/laguna-s-2.1:free is temporarily '
         'rate-limited upstream. Please retry shortly"}}}',
+
+        # Alibaba — access denied, model not purchased on this credential (HTTP 403)
+        '{"error":{"message":"Access to model denied. Please make sure you are '
+        'eligible for using the model.","id":"26a1ac50-fda2-98c1-8a90-2936d2d9f649",'
+        '"type":"AccessDenied.Unpurchased","code":"AccessDenied.Unpurchased"}}',
     ])
     def test_real_world_quota_error(self, msg):
+        assert is_quota_error(msg) is True
+
+
+# ---------------------------------------------------------------------------
+# Access-denied / unpurchased model (requires credential rotation)
+# ---------------------------------------------------------------------------
+class TestAccessDeniedUnpurchased:
+    @pytest.mark.parametrize("msg", [
+        "AccessDenied.Unpurchased",
+        "accessdenied.unpurchased",
+        '"type":"AccessDenied.Unpurchased"',
+        "Access to model denied. Please make sure you are eligible for using the model.",
+        "access to model denied",
+    ])
+    def test_matches(self, msg):
         assert is_quota_error(msg) is True
 
 

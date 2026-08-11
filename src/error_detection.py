@@ -39,6 +39,8 @@ _QUOTA_PATTERNS = [
     re.compile(r'exceeded\s*(?:your\s+)?current\s+quota', re.IGNORECASE),
     re.compile(r'depleted\s+your\s+(?:monthly\s+)?included', re.IGNORECASE),
     re.compile(r'resource\s*exhausted', re.IGNORECASE),
+    re.compile(r'accessdenied\.?\s*unpurchased', re.IGNORECASE),
+    re.compile(r'access\s+to\s+model\s+denied', re.IGNORECASE),
 ]
 
 # ---------------------------------------------------------------------------
