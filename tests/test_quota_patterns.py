@@ -210,6 +210,11 @@ class TestRealWorldMessages:
         '{"error":{"message":"Access to model denied. Please make sure you are '
         'eligible for using the model.","id":"26a1ac50-fda2-98c1-8a90-2936d2d9f649",'
         '"type":"AccessDenied.Unpurchased","code":"AccessDenied.Unpurchased"}}',
+
+        # NVIDIA — function not deployed on this credential's account (HTTP 404)
+        'HTTP 404: {"status":404,"title":"Not Found","detail":"Function '
+        "'23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account "
+        "'MDmNtX0mUjkyeZlEyo3UFMAUf3RF22sJJSMrnC1XAZs'\"}",
     ])
     def test_real_world_quota_error(self, msg):
         assert is_quota_error(msg) is True
@@ -225,6 +230,20 @@ class TestAccessDeniedUnpurchased:
         '"type":"AccessDenied.Unpurchased"',
         "Access to model denied. Please make sure you are eligible for using the model.",
         "access to model denied",
+    ])
+    def test_matches(self, msg):
+        assert is_quota_error(msg) is True
+
+
+# ---------------------------------------------------------------------------
+# NVIDIA function not deployed on this account (requires credential rotation)
+# ---------------------------------------------------------------------------
+class TestNotFoundForAccount:
+    @pytest.mark.parametrize("msg", [
+        "Not found for account 'MDmNtX0mUjkyeZlEyo3UFMAUf3RF22sJJSMrnC1XAZs'",
+        "not found for account",
+        "NOT FOUND FOR ACCOUNT",
+        "Function 'abc-123': Not found for account 'xyz'",
     ])
     def test_matches(self, msg):
         assert is_quota_error(msg) is True
