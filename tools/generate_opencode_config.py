@@ -85,8 +85,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--indent",
         type=int,
-        default=4,
-        help="JSON indentation level (default: 4)",
+        default=2,
+        help="JSON indentation level (default: 2)",
     )
     return parser.parse_args(argv)
 

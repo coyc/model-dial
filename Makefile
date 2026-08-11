@@ -83,7 +83,7 @@ units: ## Run Python unit tests
 logs: ## Stream docker logs (follow mode)
 	docker compose logs -f
 
-config-opencode: ## Generate OpenCode provider config from config.json
-	python3 tools/generate_opencode_config.py
+config-opencode: ## Generate OpenCode provider config from config.json (optional: INDENT=n)
+	python3 tools/generate_opencode_config.py $(if $(INDENT),--indent $(INDENT))
 
 .DEFAULT_GOAL := help
