@@ -24,6 +24,13 @@ Or save directly to a file:
 python3 tools/generate_opencode_config.py -o opencode-provider.json
 ```
 
+By default the output is indented with 2 spaces. Override it with option:
+
+```bash
+python3 tools/generate_opencode_config.py --indent 4
+make config-opencode INDENT=4
+```
+
 ## Example output
 
 Given this in `config.json`:
