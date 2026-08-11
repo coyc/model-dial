@@ -2369,6 +2369,80 @@ class TestNonStreamQuotaRotation:
         assert state.current_index["simple"] == 0
         assert state.credential_index["nvidia"] == 1
 
+    def test_credits_error_401_rotates_credential(self):
+        """opencode CreditsError (HTTP 401) → credential rotation, same model."""
+        from fastapi.testclient import TestClient
+
+        creds = copy.deepcopy(MOCK_PROVIDERS_CREDS)
+        _write_providers_json(Path(gateway._DEFAULT_PROVIDERS).parent, creds)
+        state = gateway.build_state(MOCK_CONFIG, MOCK_TEST_RESULTS)
+
+        credits_response = AsyncMock()
+        credits_response.status = 401
+        credits_response.text = AsyncMock(
+            return_value='{"type":"error","error":{"type":"CreditsError","message":"No payment method."}}'
+        )
+        credits_response.__aenter__ = AsyncMock(return_value=credits_response)
+        credits_response.__aexit__ = AsyncMock(return_value=False)
+
+        ok_response = AsyncMock()
+        ok_response.status = 200
+        ok_response.text = AsyncMock(return_value=json.dumps({"choices": [{"message": {"content": "ok"}}]}))
+        ok_response.__aenter__ = AsyncMock(return_value=ok_response)
+        ok_response.__aexit__ = AsyncMock(return_value=False)
+
+        with (
+            patch.object(gateway, "_state", state),
+            patch.object(gateway, "_config", MOCK_CONFIG),
+            patch("aiohttp.ClientSession.post", side_effect=[credits_response, ok_response]),
+        ):
+            client = TestClient(gateway.app)
+            resp = client.post(
+                "/v1/chat/completions",
+                json={"model": "simple", "messages": [{"role": "user", "content": "hi"}]},
+            )
+
+        assert resp.status_code == 200
+        assert state.current_index["simple"] == 0
+        assert state.credential_index["nvidia"] == 1
+
+    def test_not_found_for_account_404_rotates_credential(self):
+        """NVIDIA 'not found for account' (HTTP 404) → credential rotation, same model."""
+        from fastapi.testclient import TestClient
+
+        creds = copy.deepcopy(MOCK_PROVIDERS_CREDS)
+        _write_providers_json(Path(gateway._DEFAULT_PROVIDERS).parent, creds)
+        state = gateway.build_state(MOCK_CONFIG, MOCK_TEST_RESULTS)
+
+        not_found_response = AsyncMock()
+        not_found_response.status = 404
+        not_found_response.text = AsyncMock(
+            return_value='{"status":404,"detail":"Function \'abc\': Not found for account \'xyz\'"}'
+        )
+        not_found_response.__aenter__ = AsyncMock(return_value=not_found_response)
+        not_found_response.__aexit__ = AsyncMock(return_value=False)
+
+        ok_response = AsyncMock()
+        ok_response.status = 200
+        ok_response.text = AsyncMock(return_value=json.dumps({"choices": [{"message": {"content": "ok"}}]}))
+        ok_response.__aenter__ = AsyncMock(return_value=ok_response)
+        ok_response.__aexit__ = AsyncMock(return_value=False)
+
+        with (
+            patch.object(gateway, "_state", state),
+            patch.object(gateway, "_config", MOCK_CONFIG),
+            patch("aiohttp.ClientSession.post", side_effect=[not_found_response, ok_response]),
+        ):
+            client = TestClient(gateway.app)
+            resp = client.post(
+                "/v1/chat/completions",
+                json={"model": "simple", "messages": [{"role": "user", "content": "hi"}]},
+            )
+
+        assert resp.status_code == 200
+        assert state.current_index["simple"] == 0
+        assert state.credential_index["nvidia"] == 1
+
 
 # ===========================================================================
 # Tests: Credential rotation in streaming handler

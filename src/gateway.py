@@ -540,7 +540,7 @@ def _handle_provider_error(
     - reason is a short description
     """
     
-    if is_quota_error(body_text) and status in {429, 402, 403}:
+    if is_quota_error(body_text) and status in {429, 402, 403, 401, 404}:
         error_msg = body_text[:500].replace('\n', ' ')
         logger.warning(
             f"[QUOTA] {category}: {provider_name} (HTTP {status})\n  Message: {error_msg}"
